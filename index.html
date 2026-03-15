@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="HipHop Freestyle 规则生成器 - 随机生成身体形变和音乐理解组合，拓展 Freestyle 思路">
-    <meta name="theme-color" content="#667eea">
+    <meta name="theme-color" content="#0b0914">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>HipHop Freestyle 规则生成器</title>
+    <title>Freestyle 规则生成器</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap');
+
+        :root {
+            --bg-color: #0b0914;
+            --card-bg: rgba(20, 18, 28, 0.7);
+            --accent-gradient: linear-gradient(135deg, #ff3366, #ff9933);
+            --accent-color: #ff3366;
+            --text-primary: #ffffff;
+            --text-secondary: #a09eb0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,271 +31,213 @@
         }
 
         html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
+            background-color: var(--bg-color);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 51, 102, 0.15), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(255, 153, 51, 0.15), transparent 50%);
             background-attachment: fixed;
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 16px;
-            padding-bottom: 32px;
+            padding: 20px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 520px;
+            padding-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        /* 标题区 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         h1 {
-            color: white;
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            line-height: 1.4;
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+            font-style: italic;
         }
 
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* 卡片通用样式 */
         .card {
-            background: white;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
         }
 
         .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #667eea;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.05em;
+            font-style: italic;
         }
 
-        /* 身体形变部分 */
+        .card-icon {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        /* 选项网格 */
         .form-section {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
         }
 
         .form-label {
-            font-size: 15px;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 10px;
             display: block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
         }
 
         .option-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
 
         .option-btn {
-            padding: 14px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
+            transition: all 0.2s ease;
             text-align: center;
-            touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
-        .option-btn:active {
-            transform: scale(0.95);
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .option-btn.selected {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: #fff;
             font-weight: 600;
+            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
         }
 
+        /* 按钮组 */
         .action-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 16px;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .btn {
             flex: 1;
-            padding: 16px 20px;
             border: none;
-            border-radius: 10px;
-            font-size: 15px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .btn:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
         }
 
         .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            flex: 0 0 auto;
         }
 
-        /* BPM 生成器 */
-        .bpm-display {
-            text-align: center;
-            margin: 20px 0;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .bpm-value {
-            font-size: 64px;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 4px;
-            line-height: 1;
-        }
-
-        .bpm-label {
-            font-size: 15px;
-            color: #999;
-        }
-
-        .tap-area {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 50px 20px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.15s;
-            margin: 16px 0;
-            touch-action: manipulation;
-        }
-
-        .tap-area:active {
-            transform: scale(0.97);
-            opacity: 0.9;
-        }
-
-        .tap-text {
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .tap-hint {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* 节拍器 */
-        .beats-container {
-            margin: 20px 0;
-        }
-
-        .beats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .beat-box {
-            aspect-ratio: 1;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #999;
-            position: relative;
-            background: white;
-            transition: all 0.2s;
-        }
-
-        .beat-box.active {
-            background: #667eea;
-            border-color: #667eea;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-        }
-
-        .beat-box.freeze {
-            background: #ff6b6b;
-            border-color: #ff6b6b;
-            color: white;
-        }
-
-        .beat-box.freeze::after {
-            content: 'FREEZE';
-            position: absolute;
-            bottom: 3px;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .beat-number {
-            font-size: 20px;
-        }
-
-        .measure-label {
-            font-size: 10px;
-            margin-top: 2px;
-            opacity: 0.7;
-        }
-
-        /* 控制面板 */
-        .control-panel {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 16px;
-        }
-
+        /* 结果展示 */
         .result-display {
-            background: #f8f9ff;
-            border-radius: 10px;
+            margin-top: 24px;
             padding: 16px;
-            margin-top: 16px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
         }
 
         .result-item {
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: #333;
-            line-height: 1.6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
         }
 
         .result-item:last-child {
@@ -289,105 +245,194 @@
         }
 
         .result-label {
-            font-weight: 600;
-            color: #667eea;
-            margin-right: 6px;
+            color: var(--text-secondary);
         }
 
-        /* 加载状态 */
-        .loading {
-            pointer-events: none;
+        .result-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* BPM 区域 */
+        .bpm-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .bpm-value-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .bpm-value {
+            font-size: 72px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -2px;
+            font-style: italic;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .bpm-unit {
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .tap-area {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tap-area:hover {
+            border-color: var(--accent-color);
+            background: rgba(255, 51, 102, 0.05);
+        }
+
+        .tap-area:active {
+            background: rgba(255, 51, 102, 0.1);
+            transform: scale(0.98);
+            border-style: solid;
+        }
+
+        .tap-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+
+        .tap-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tap-subtext {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* 节拍器网格 */
+        .beats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .beat-box {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.1s ease;
+            position: relative;
+        }
+
+        .beat-box span {
+            font-size: 10px;
+            margin-top: 4px;
+            color: var(--text-secondary);
             opacity: 0.6;
         }
 
-        /* 横屏适配 */
-        @media (min-width: 600px) and (orientation: landscape) {
-            .beats-grid {
-                grid-template-columns: repeat(8, 1fr);
-            }
-            
-            h1 {
-                font-size: 32px;
-            }
+        .beat-box.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
         }
 
-        /* 平板和桌面端 */
-        @media (min-width: 768px) {
-            body {
-                padding: 32px 20px;
-            }
-
-            h1 {
-                font-size: 36px;
-                margin-bottom: 32px;
-            }
-
-            .card {
-                padding: 28px;
-                margin-bottom: 20px;
-                border-radius: 20px;
-            }
-
-            .card-title {
-                font-size: 22px;
-            }
-
-            .option-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-
-            .beats-grid {
-                grid-template-columns: repeat(8, 1fr);
-                gap: 10px;
-            }
-
-            .tap-area {
-                padding: 60px 30px;
-            }
-
-            .bpm-value {
-                font-size: 72px;
-            }
+        .beat-box.active span {
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        /* 超大屏幕 */
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 900px;
-            }
+        .beat-box.freeze {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
 
+        .beat-box.freeze.active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .beat-box.freeze.active span {
+            color: #000;
+        }
+
+        .beat-box.freeze span {
+            display: none;
+        }
+
+        .freeze-indicator {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+            color: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 响应式调整 */
+        @media (min-width: 640px) {
             .option-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
-        }
-
-        /* 暗色模式支持 */
-        @media (prefers-color-scheme: dark) {
-            .card {
-                background: rgba(255, 255, 255, 0.95);
-            }
-        }
-
-        /* 减少动画（辅助功能） */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+            .beats-grid {
+                grid-template-columns: repeat(8, 1fr);
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎵 HipHop Freestyle 规则生成器</h1>
+        <header>
+            <h1>Freestyle 规则</h1>
+            <div class="subtitle">生成器</div>
+        </header>
 
         <!-- 身体形变规则 -->
         <div class="card">
-            <div class="card-title">💃 身体形变规则</div>
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">01</span> 身体控制 (Body Controls)
+                </div>
+            </div>
             
             <div class="form-section">
-                <label class="form-label">脚步位移</label>
+                <label class="form-label">脚步轨迹</label>
                 <div class="option-grid" id="footworkOptions">
                     <button class="option-btn" data-type="footwork" data-value="画三角">画三角</button>
                     <button class="option-btn" data-type="footwork" data-value="画正方形">画正方形</button>
@@ -395,81 +440,91 @@
                     <button class="option-btn" data-type="footwork" data-value="画十字">画十字</button>
                     <button class="option-btn" data-type="footwork" data-value="画叉">画叉</button>
                     <button class="option-btn" data-type="footwork" data-value="画米字">画米字</button>
-                    <button class="option-btn" data-type="footwork" data-value="九宫格移动">九宫格移动</button>
+                    <button class="option-btn" data-type="footwork" data-value="九宫格">九宫格</button>
                     <button class="option-btn" data-type="footwork" data-value="画字母">画字母</button>
                 </div>
             </div>
 
             <div class="form-section">
-                <label class="form-label">重心高低</label>
+                <label class="form-label">高低起伏</label>
                 <div class="option-grid" id="heightOptions">
                     <button class="option-btn" data-type="height" data-value="由高到低">由高到低</button>
                     <button class="option-btn" data-type="height" data-value="由低到高">由低到高</button>
                     <button class="option-btn" data-type="height" data-value="高-低-高">高-低-高</button>
-                    <button class="option-btn" data-type="height" data-value="保持高位跳">保持高位跳</button>
-                    <button class="option-btn" data-type="height" data-value="保持低位跳">保持低位跳</button>
+                    <button class="option-btn" data-type="height" data-value="始终高位">始终高位</button>
+                    <button class="option-btn" data-type="height" data-value="始终低位">始终低位</button>
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-primary" id="randomBody">🎲 随机生成</button>
-                <button class="btn btn-secondary" id="resetBody">🔄 重置选择</button>
+                <button class="btn btn-primary" id="randomBody">随机生成</button>
+                <button class="btn btn-secondary" id="resetBody">重置</button>
             </div>
 
-            <div class="result-display" id="bodyResult" style="display: none;">
+            <div class="result-display hidden" id="bodyResult">
                 <div class="result-item">
-                    <span class="result-label">脚步位移：</span>
-                    <span id="footworkResult">-</span>
+                    <span class="result-label">脚步</span>
+                    <span class="result-value" id="footworkResult">-</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">重心高低：</span>
-                    <span id="heightResult">-</span>
+                    <span class="result-label">高低</span>
+                    <span class="result-value" id="heightResult">-</span>
                 </div>
             </div>
         </div>
 
         <!-- BPM 生成器 -->
         <div class="card">
-            <div class="card-title">🎹 BPM 生成器</div>
-            
-            <div class="bpm-display">
-                <div class="bpm-value" id="bpmValue">--</div>
-                <div class="bpm-label">BPM (每分钟节拍数)</div>
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">02</span> BPM 测速
+                </div>
             </div>
+            
+            <div class="bpm-container">
+                <div class="bpm-value-wrapper">
+                    <div class="bpm-value" id="bpmValue">--</div>
+                    <div class="bpm-unit">每分钟节拍数</div>
+                </div>
 
-            <div class="tap-area" id="tapArea">
-                <div class="tap-text">点击这里打节拍</div>
-                <div class="tap-hint">持续点击 4-8 次以计算 BPM</div>
+                <div class="tap-area" id="tapArea">
+                    <div class="tap-icon">↓</div>
+                    <div class="tap-text">点击这里 (Tap)</div>
+                    <div class="tap-subtext">连续点击以测算 BPM</div>
+                </div>
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-secondary" id="resetBPM">🔄 重置 BPM</button>
-                <button class="btn btn-primary" id="startMetronome">▶️ 启动节拍器</button>
+                <button class="btn btn-primary" id="startMetronome">启动节拍器</button>
+                <button class="btn btn-secondary" id="resetBPM">重置</button>
             </div>
         </div>
 
-        <!-- 节拍器与 Freeze 点 -->
+        <!-- 节拍器与 Freeze -->
         <div class="card">
-            <div class="card-title">🎼 节拍器与 Freeze 点</div>
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">03</span> 节拍与定格 (Beat & Freeze)
+                </div>
+            </div>
             
-            <div class="beats-container">
-                <div class="beats-grid" id="beatsGrid">
-                    <!-- 动态生成 8 个拍子 -->
-                </div>
+            <div class="beats-grid" id="beatsGrid">
+                <!-- 动态生成 8 个拍子 -->
             </div>
 
-            <div class="control-panel">
-                <button class="btn btn-secondary" id="stopMetronome">⏹️ 停止</button>
-                <button class="btn btn-primary" id="randomFreeze">❄️ 随机 Freeze 点</button>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="randomFreeze">设置定格点 (Freeze)</button>
+                <button class="btn btn-secondary" id="stopMetronome">停止</button>
             </div>
 
-            <div class="result-display" id="freezeResult" style="display: none;">
+            <div class="result-display hidden" id="freezeResult">
                 <div class="result-item">
-                    <span class="result-label">Freeze 拍位：</span>
-                    <span id="freezeBeat">-</span>
+                    <span class="result-label">目标节拍</span>
+                    <span class="result-value" id="freezeBeat">-</span>
                 </div>
-                <div class="result-item" style="font-size: 14px; color: #666; margin-top: 8px;">
-                    💡 在这一拍加入 isolation 和 wave
+                <div class="result-item" style="border-top: 1px solid var(--border-color); margin-top: 12px; padding-top: 12px; flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <span class="result-label" style="font-size: 11px; text-transform: uppercase;">提示</span>
+                    <span class="result-value" style="font-size: 12px; color: var(--text-secondary); font-weight: 400;">在这个节拍上使用隔离 (Isolation) 或电流 (Wave) 等质感完成定格 (Freeze)。</span>
                 </div>
             </div>
         </div>
@@ -538,14 +593,14 @@
             document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
             selectedFootwork = null;
             selectedHeight = null;
-            bodyResult.style.display = 'none';
+            bodyResult.classList.add('hidden');
         });
 
         function updateBodyResult() {
             if (selectedFootwork && selectedHeight) {
                 footworkResult.textContent = selectedFootwork;
                 heightResult.textContent = selectedHeight;
-                bodyResult.style.display = 'block';
+                bodyResult.classList.remove('hidden');
             }
         }
 
@@ -558,19 +613,16 @@
             e.preventDefault();
             const now = Date.now();
             
-            // 清除之前的超时
             if (tapTimeout) {
                 clearTimeout(tapTimeout);
             }
             
             tapTimes.push(now);
             
-            // 保留最近 8 次点击
             if (tapTimes.length > 8) {
                 tapTimes.shift();
             }
             
-            // 至少需要 2 次点击才能计算
             if (tapTimes.length >= 2) {
                 const intervals = [];
                 for (let i = 1; i < tapTimes.length; i++) {
@@ -580,14 +632,12 @@
                 const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
                 const calculatedBPM = Math.round(60000 / avgInterval);
                 
-                // BPM 合理性检查（通常在 40-240 之间）
                 if (calculatedBPM >= 40 && calculatedBPM <= 240) {
                     bpm = calculatedBPM;
                     bpmValue.textContent = bpm;
                 }
             }
             
-            // 3 秒无操作后重置
             tapTimeout = setTimeout(() => {
                 tapTimes = [];
             }, 3000);
@@ -613,12 +663,11 @@
             const fragment = document.createDocumentFragment();
             
             for (let i = 1; i <= 8; i++) {
-                const measure = i <= 4 ? '第一小节' : '第二小节';
                 const beatBox = document.createElement('div');
                 beatBox.className = 'beat-box';
                 beatBox.innerHTML = `
-                    <div class="beat-number">${i}</div>
-                    <div class="measure-label">${measure}</div>
+                    ${i}
+                    <span>${i <= 4 ? '第一小节' : '第二小节'}</span>
                 `;
                 beatBox.dataset.beat = i;
                 fragment.appendChild(beatBox);
@@ -632,25 +681,31 @@
             e.preventDefault();
             
             if (!bpm) {
-                alert('请先生成 BPM！');
+                alert('请先连续点击测算 BPM！');
                 return;
             }
             
             if (isMetronomePlaying) {
+                // Pause logic
+                if (metronomeInterval) {
+                    cancelAnimationFrame(metronomeInterval);
+                    metronomeInterval = null;
+                }
+                isMetronomePlaying = false;
+                startBtn.innerHTML = '启动节拍器';
                 return;
             }
             
             isMetronomePlaying = true;
-            startBtn.textContent = '⏸️ 暂停节拍器';
+            startBtn.innerHTML = '暂停节拍器';
             
             if (metronomeInterval) {
-                clearInterval(metronomeInterval);
+                cancelAnimationFrame(metronomeInterval);
             }
             
             const interval = 60000 / bpm;
             currentBeat = 0;
             
-            // 使用 requestAnimationFrame 优化性能
             let lastTime = performance.now();
             
             function tick() {
@@ -660,14 +715,12 @@
                 if (elapsed >= interval) {
                     lastTime = now;
                     
-                    // 移除所有 active 类
                     const beatBoxes = beatsGrid.querySelectorAll('.beat-box');
                     beatBoxes.forEach(box => box.classList.remove('active'));
                     
-                    // 添加当前拍的 active 类
                     const activeBeat = (currentBeat % 8) + 1;
                     const activeBox = beatsGrid.querySelector(`[data-beat="${activeBeat}"]`);
-                    if (activeBox && !activeBox.classList.contains('freeze')) {
+                    if (activeBox) {
                         activeBox.classList.add('active');
                     }
                     
@@ -691,7 +744,7 @@
             }
             
             isMetronomePlaying = false;
-            startBtn.textContent = '▶️ 启动节拍器';
+            startBtn.innerHTML = '启动节拍器';
             
             beatsGrid.querySelectorAll('.beat-box').forEach(box => {
                 box.classList.remove('active');
@@ -704,18 +757,22 @@
             
             beatsGrid.querySelectorAll('.beat-box').forEach(box => {
                 box.classList.remove('freeze');
+                const indicator = box.querySelector('.freeze-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
             });
             
             const freezeBox = beatsGrid.querySelector(`[data-beat="${randomBeat}"]`);
             if (freezeBox) {
                 freezeBox.classList.add('freeze');
+                freezeBox.innerHTML += '<div class="freeze-indicator">Freeze</div>';
             }
             
             freezeBeat.textContent = `第 ${randomBeat} 拍`;
-            freezeResult.style.display = 'block';
+            freezeResult.classList.remove('hidden');
         });
 
-        // 页面卸载时清理
         window.addEventListener('beforeunload', function() {
             if (metronomeInterval) {
                 cancelAnimationFrame(metronomeInterval);
@@ -725,17 +782,14 @@
             }
         });
 
-        // 页面可见性变化时暂停节拍器
         document.addEventListener('visibilitychange', function() {
             if (document.hidden && isMetronomePlaying) {
                 document.getElementById('stopMetronome').click();
             }
         });
 
-        // 初始化
         initBeatsGrid();
         
-        // 防止双击缩放（移动端）
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function(event) {
             const now = Date.now();
